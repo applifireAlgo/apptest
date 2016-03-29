@@ -1,0 +1,35 @@
+Ext.define('Apptest.apptest.shared.com.model.organizationboundedcontext.contacts.ContactTypeModel', {
+     "extend": "Ext.data.Model",
+     "fields": [{
+          "name": "primaryKey",
+          "type": "auto",
+          "defaultValue": ""
+     }, {
+          "name": "contactTypeId",
+          "type": "string",
+          "defaultValue": ""
+     }, {
+          "name": "contactType",
+          "type": "string",
+          "defaultValue": ""
+     }, {
+          "name": "contactTypeDesc",
+          "type": "string",
+          "defaultValue": ""
+     }, {
+          "name": "contactTypeIcon",
+          "type": "string",
+          "defaultValue": ""
+     }, {
+          "name": "versionId",
+          "type": "int",
+          "defaultValue": ""
+     }, {
+          "name": "entityAudit",
+          "reference": "EntityAudit"
+     }, {
+          "name": "primaryDisplay",
+          "type": "string",
+          "defaultValue": ""
+     }]
+});

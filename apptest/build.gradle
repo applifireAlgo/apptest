@@ -1,0 +1,168 @@
+apply plugin: 'java'
+apply plugin: 'war'
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+sourceSets {
+	test {
+		java {
+			srcDir 'src/test/java'
+		}
+	}
+}
+test{
+	jvmArgs '-XX:MaxPermSize=512m'
+}
+task copyTestResources(type: Copy) {
+	into "$buildDir/resources/lib"
+	from configurations.runtime
+}
+processTestResources.dependsOn copyTestResources
+task compileClasses(type:JavaCompile){
+	source = sourceSets.main.java
+	classpath = sourceSets.main.compileClasspath
+	destinationDir = sourceSets.main.output.classesDir
+}
+task createSharedJar(type:Jar){
+	from sourceSets.main.output.classesDir
+	include 'com/app/shared/**/*.*'
+	baseName 'app-shared'
+	manifest {
+		attributes 	'Copyright': System.properties['_applifire_copyright'],
+		'Build-Date': new Date(),
+		'version' : 1.0
+	}
+	version '1.0'
+}
+task createServiceJar(type:Jar){
+	from sourceSets.main.output.classesDir
+	include 'com/app/server/service/**/*.*'
+	exclude 'com/app/server/service/aspect/**/*.*'
+	baseName 'app-service'
+	manifest {
+		attributes 	'Copyright': System.properties['_applifire_copyright'],
+		'Build-Date': new Date(),
+		'version' : 1.0
+	}
+	version '1.0'
+}
+task createBizServiceJar(type:Jar){
+	from sourceSets.main.output.classesDir
+	include 'com/app/server/businessservice/**/*.*'
+	exclude 'com/app/server/businessservice/aspect/**/*.*'
+	baseName 'app-biz-service'
+	manifest {
+		attributes 	'Copyright': System.properties['_applifire_copyright'],
+		'Build-Date': new Date(),
+		'version' : 1.0
+	}
+	version '1.0'
+}
+task createRepositoryJar(type:Jar){
+	from sourceSets.main.output.classesDir
+	include 'com/app/server/repository/**/*.*'
+	exclude 'com/app/server/repository/aspect/**/*.*'
+	baseName 'app-repository'
+	manifest {
+		attributes 	'Copyright': System.properties['_applifire_copyright'],
+		'Build-Date': new Date(),
+		'version' : 1.0
+	}
+	version '1.0'
+}
+task creatCustomJars(dependsOn:[compileClasses, createSharedJar, createServiceJar, createBizServiceJar, createRepositoryJar])
+war{
+	dependsOn creatCustomJars
+	classpath = configurations.runtime
+	webInf {
+		into('classes') {
+			from (sourceSets.main.output.classesDir){
+				include ('com/app/config/','pro12/app/server/bean','com/app/server/service/aspect/','com/app/server/businessservice/aspect/','com/app/server/repository/aspect/')
+			}
+			from "$project.buildDir/resources/main/"
+		}
+	}
+}
+dependencies {
+	runtime fileTree(dir: "$project.buildDir/libs", include: "*.jar")
+	compile fileTree(dir: myLibPath, include: [
+		'log4j/log4j-1.2.17.jar',
+		'apache-commons/commons-lang3-3.1.jar',
+		'aspectj/aopalliance-1.0.jar',
+		'google-gson/gson-2.3.1.jar',
+		'slf4j/slf4j-api-1.7.6.jar',
+		'json/json-20090211.jar',
+		'json/json-taglib-0.4.1.jar',
+		'aspectj/aspectjweaver-1.7.4.jar',
+		'aspectj/aspectjrt-1.7.4.jar',
+		'spring-framework/spring-context-4.0.6.RELEASE.jar',
+		'spring-framework/spring-aop-3.2.6.RELEASE.jar',
+		'spring-framework/spring-aspects-3.2.6.RELEASE.jar',
+		'spring-framework/spring-context-support-3.2.6.RELEASE.jar',
+		'spring-framework/spring-orm-4.1.1.RELEASE.jar',
+		'spring-framework/spring-core-4.0.6.RELEASE.jar',
+		'spring-framework-boot/spring-boot-1.1.7.RELEASE.jar',
+		'spring-framework-boot/spring-boot-actuator-1.1.7.RELEASE.jar',
+		'spring-framework-boot/spring-boot-starter-actuator-1.1.9.RELEASE.jar',
+		'spring-framework-boot/spring-boot-autoconfigure-1.1.7.RELEASE.jar',
+		'spring-framework-boot/spring-boot-starter-1.1.7.RELEASE.jar',
+		'spring-framework-security/spring-ldap-core-1.3.2.RELEASE.jar',
+		'spring-framework-security/spring-security-core-3.2.5.RELEASE.jar',
+		'spring-framework-security/spring-security-ldap-3.2.5.RELEASE.jar',
+		'spring-framework-security/spring-security-config-3.2.5.RELEASE.jar',
+		'spring-framework-security/spring-security-web-3.2.5.RELEASE.jar',
+		'commons/commons-beanutils-1.9.2.jar',
+		'commons/commons-validator-1.3.1.jar',
+		'commons/commons-io-2.1.jar',
+		'commons/commons-lang-2.4.jar',
+		'commons/commons-dbcp-1.4.jar',
+		'commons/commons-pool-1.5.4.jar',
+		'commons/commons-fileupload-1.2.jar',
+		'commons/commons-codec-1.9.jar',
+		'eclipse/eclipselink-2.5.1.jar',
+		'eclipse/javax.persistence-2.0.0.jar',
+		'spring-framework/spring-web-4.0.6.RELEASE.jar',
+		'spring-framework/spring-webmvc-4.0.6.RELEASE.jar',
+		'spring-framework/spring-web-4.0.6.RELEASE.jar',
+		'spring-framework/spring-jdbc-4.1.1.RELEASE.jar',
+		'spring-framework/spring-expression-4.1.1.RELEASE.jar',
+		'spring-framework/spring-beans-4.0.6.RELEASE.jar',
+		'spring-framework/spring-tx-4.0.6.RELEASE.jar',
+		'apache-bval/bval-jsr303-0.5.jar',
+		'apache-bval/bval-core-0.5.jar',
+		'codehaus/jackson-mapper-asl-1.9.13.jar',
+		'codehaus/jackson-core-asl-1.9.13.jar',
+		'fasterxml/jackson-annotations-2.2.3.jar',
+		'fasterxml/jackson-core-2.2.3.jar',
+		'fasterxml/jackson-databind-2.2.3.jar',
+		'javax/validation-api-1.0.0.GA.jar',
+		'javax/javax.servlet-api-3.1.0.jar',
+		'javax/mail-1.4.7.jar',
+		'apache-httpcomponents/httpmime-4.4.jar',
+		'apache-httpcomponents/httpclient-4.3.1.jar',
+		'apache-httpcomponents/httpcore-4.3.jar',
+		'camel/commons-logging-1.1.1.jar',
+		'poi/poi-3.10-beta2.jar',
+		'poi/poi-ooxml-schemas-3.9.jar',
+		'poi/poi-ooxml-3.9.jar',
+		'apache-bval/xmlbeans-2.3.0.jar',
+		'commons/dom4j-1.1.jar',
+		'apache-velocity/velocity-1.7.jar',
+		'commons/commons-collections-3.2.1.jar',
+		'athena/athena-annotation-1.0.jar',
+		'athena/athena-core-1.0.jar',
+		'athena/athena-report-1.0.jar',
+		'athena/athena-query-1.0.jar',
+		'spartan/spartan-shield-1.0.jar',
+		'athena/athena-config-1.0.jar',
+		'athena/athena-framework-1.0.jar',
+		'spartan/spartan-sprinkler-1.0.jar',
+		'spartan/spartan-sprinkler-data-1.0.jar',
+		'spartan/spartan-healthmeter-1.0.jar',
+		'mysql/mysql-connector-java-5.1.31.jar',
+	])
+	testCompile fileTree(dir: myLibPath, include: [
+		'junit/junit-4.11.jar',
+		'hamcrest/hamcrest-core-1.3.jar',
+		'spring-framework-test/spring-test-4.0.6.RELEASE.jar'
+	])
+}

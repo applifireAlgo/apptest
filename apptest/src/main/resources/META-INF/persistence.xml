@@ -1,0 +1,68 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+
+	<persistence-unit name="apptest" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<properties>
+			<property name="eclipselink.ddl-generation" value="none"/>
+			<property name="eclipselink.logging.level" value="FINEST"/>
+			<property name="eclipselink.weaving" value="false"/>
+			<property name="eclipselink.jdbc.allow-native-sql-queries" value="true"/>
+			<property name="eclipselink.deploy-on-startup" value="true"/>
+
+			<property name="eclipselink.connection-pool.default.initial" value="15"/>
+			<property name="eclipselink.connection-pool.default.min" value="6"/>
+			<property name="eclipselink.connection-pool.default.max" value="10"/>
+
+
+		<property name="eclipselink.dialect" value="org.eclipse.persistence.platform.database.MySQLPlatform"/>
+        <property name="eclipselink.session.customizer" value="com.app.config.UUIDGenerator"/>
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost-MYSQL:3306/apptest"/>
+        <property name="javax.persistence.jdbc.user" value="algo"/>
+        <property name="javax.persistence.jdbc.password" value="algo"/>
+        <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        </properties>
+	<class>com.app.shared.authentication.ArtPasswordAlgorithm</class>
+    <class>com.app.shared.authentication.ArtPasswordPolicy</class>
+    <class>com.app.shared.organizationboundedcontext.location.Timezone</class>
+    <class>com.app.shared.organizationboundedcontext.location.Language</class>
+    <class>com.app.shared.organizationboundedcontext.location.Country</class>
+    <class>com.app.shared.organizationboundedcontext.location.State</class>
+    <class>com.app.shared.organizationboundedcontext.location.City</class>
+    <class>com.app.shared.organizationboundedcontext.location.AddressType</class>
+    <class>com.app.shared.organizationboundedcontext.location.Address</class>
+    <class>com.app.shared.organizationboundedcontext.contacts.ContactType</class>
+    <class>com.app.shared.organizationboundedcontext.contacts.CommunicationGroup</class>
+    <class>com.app.shared.organizationboundedcontext.contacts.CommunicationType</class>
+    <class>com.app.shared.organizationboundedcontext.contacts.Gender</class>
+    <class>com.app.shared.organizationboundedcontext.contacts.Title</class>
+    <class>com.app.shared.organizationboundedcontext.contacts.CoreContacts</class>
+    <class>com.app.shared.organizationboundedcontext.contacts.CommunicationData</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.PasswordAlgo</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.PasswordPolicy</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.Question</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.UserAccessLevel</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.UserAccessDomain</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.User</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.Login</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.LoginSession</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.PassRecovery</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.UserData</class>
+    <class>com.app.shared.aaaboundedcontext.authentication.SessionData</class>
+    <class>com.app.shared.aaaboundedcontext.authorization.Roles</class>
+    <class>com.app.shared.aaaboundedcontext.authorization.AppMenus</class>
+    <class>com.app.shared.aaaboundedcontext.authorization.RoleMenuBridge</class>
+    <class>com.app.shared.aaaboundedcontext.authorization.UserRoleBridge</class>
+    <jar-file>lib/athena-config-1.0.jar</jar-file>
+    <jar-file>lib/athena-framework-1.0.jar</jar-file>
+    <jar-file>lib/spartan-sprinkler-1.0.jar</jar-file>
+    <jar-file>lib/spartan-sprinkler-data-1.0.jar</jar-file>
+    <jar-file>lib/spartan-healthmeter-1.0.jar</jar-file>
+    <jar-file>lib/athena-annotation-1.0.jar</jar-file>
+    <jar-file>lib/athena-core-1.0.jar</jar-file>
+    <jar-file>lib/athena-report-1.0.jar</jar-file>
+    <jar-file>lib/athena-query-1.0.jar</jar-file>
+    <jar-file>lib/spartan-shield-1.0.jar</jar-file>
+  </persistence-unit>
+
+</persistence>

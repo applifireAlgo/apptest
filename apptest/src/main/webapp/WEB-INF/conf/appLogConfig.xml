@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AppLogConfig>
+<LoggingProperties>
+<!--Refresh Time to reload this configuration file In a production environment, if you want to debug a specific component you can change the Alarm Log Levels (for specific Target like File, DB etc) of that specific components. Once the configuration is refreshed new Log Events will be written to the configured Target (File, DB etc). This will help to isolate and troubleshoot a production environment without shutting down the application. -->
+<refresh timeUnit="minutes">0</refresh> <eventQueueSize value="100000"/>
+<!--Logging Framework is Asynchronous in nature. Log Events goes to the Queue first and connectors takes the event from the queue for processing. Event Queue Type 0 - Circular Queue (RECOMMENDED) 1 - Infinite Queue with Initial Capacity and events will be wrapped in Soft References (JVM will garbage collect these soft references when it runs out of memory). 2 - Infinite Queue (NOT RECOMMENDED)-->
+<eventQueueType value="0"/>
+
+<eventSeverity>
+<map>
+<property id="4210A853-ED04-4C5F-9B97-41857E6279DF" name="5">Fatal</property>
+<property id="5C59D04D-0FF0-48C8-A734-019FBC55AD11" name="4">Critical</property>
+<property id="61A2BB72-5808-4E09-B02E-EF6CCE0F5867" name="1">Trace</property>
+<property id="7ED37E4A-E382-4700-B77E-F74025F2031C" name="0">Debug</property>
+<property id="A110EBFC-8F07-466E-ABB5-B39DD10981E8" name="2">Info</property>
+<property id="E7DD12C0-E36E-4347-A1B7-976E90BF3F7E" name="3">Warning</property>
+</map>
+</eventSeverity>
+</LoggingProperties>
+<connectors>
+<connector cid="4" logLevel="3">
+<name enable="false" class="com.spartan.sprinkler.connectors.socket.SocketConnector"  id="socket.tcp.server" isSystemDefined="false">TCPSocketConnector</name>
+<map>
+<!-- Server IP Address / Host Name -->
+<attribute name="hostname">192.168.2.40</attribute>
+<!--  Server Port Number -->
+<attribute name="port">4444</attribute>
+</map>
+</connector>
+<connector cid="2" logLevel="2">
+<name enable="true" class="com.spartan.sprinkler.connectors.db.DBConnector"  id="db.connector" isSystemDefined="true">DatabaseConnector</name>
+<map>
+<!-- Batch will be commited if Time Out happens before the batch size reached. -->
+<attribute name="thread.timeout">5000</attribute>
+<!-- JDBC Batch Size -->
+<attribute name="batchSize">500</attribute>
+<!-- JDBC Connection Pool Size -->
+<attribute name="threadPoolSize">5</attribute>
+<attribute name="tablename">art_log_events_t</attribute>
+</map>
+</connector>
+<connector cid="3" logLevel="3">
+<name enable="false" class="com.spartan.sprinkler.connectors.syslog.SyslogConnector"  id="socket.udp.syslog" isSystemDefined="false">SyslogConnector</name>
+<map>
+<!-- Syslog Receiver IP Address -->
+<attribute name="hostname">192.168.2.28</attribute>
+<!-- Syslog Receiver Port Number -->
+<attribute name="port">5001</attribute>
+</map>
+</connector>
+<connector cid="1" logLevel="0">
+<name enable="true" class="com.spartan.sprinkler.connectors.file.FileConnector"  id="file.connector" isSystemDefined="true">FileConnector</name>
+<map>
+<attribute name="backup.date.pattern">yyyyMMddHHmmss</attribute>
+<!-- File Roll Over based on File Size. -->
+<attribute name="file.rollover.size">100</attribute>
+<attribute name="output.path">/home/applifire/logs</attribute>
+<!-- Keep Latest X number of Backup Files. Valid values = Greater than ZERO or MINUS 1 If you want to keep all the files then give -1 -->
+<attribute name="backup.keep.last.x.files">2</attribute>
+<!-- File Roll Over Policy 0 - Based on Time ONLY 1 - Based on Size ONLY 2 - Based on Time or Size, which ever happens first. -->
+<attribute name="file.rollover.policy">0</attribute>
+<!--  Buffer size in KB -->
+<attribute name="buffer.size">1</attribute>
+<attribute name="backup.path">/home/applifire/logs/backups</attribute>
+<!-- File Roll Over Size Unit. Valid Values (MB, GB) -->
+<attribute name="file.rollover.size.unit">MB</attribute>
+<!-- File Roll Over Time Unit Valid values (Hours, Days, Months) -->
+<attribute name="file.rollover.time.unit">Hours</attribute>
+<!--  Flush time in seconds -->
+<attribute name="flush.period">60</attribute>
+<!-- File Roll Over based on Time -->
+<attribute name="file.rollover.time">1</attribute>
+</map>
+</connector>
+</connectors>
+</AppLogConfig>

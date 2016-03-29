@@ -1,0 +1,43 @@
+Ext.define('Apptest.apptest.shared.com.model.aaaboundedcontext.authentication.PasswordAlgoModel', {
+     "extend": "Ext.data.Model",
+     "fields": [{
+          "name": "primaryKey",
+          "type": "auto",
+          "defaultValue": ""
+     }, {
+          "name": "algoId",
+          "type": "string",
+          "defaultValue": ""
+     }, {
+          "name": "algorithm",
+          "type": "int",
+          "defaultValue": ""
+     }, {
+          "name": "algoName",
+          "type": "string",
+          "defaultValue": ""
+     }, {
+          "name": "algoDescription",
+          "type": "string",
+          "defaultValue": ""
+     }, {
+          "name": "algoIcon",
+          "type": "string",
+          "defaultValue": ""
+     }, {
+          "name": "algoHelp",
+          "type": "string",
+          "defaultValue": ""
+     }, {
+          "name": "versionId",
+          "type": "int",
+          "defaultValue": ""
+     }, {
+          "name": "entityAudit",
+          "reference": "EntityAudit"
+     }, {
+          "name": "primaryDisplay",
+          "type": "string",
+          "defaultValue": ""
+     }]
+});

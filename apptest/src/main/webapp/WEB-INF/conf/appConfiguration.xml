@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AppConfig>
+
+<!-- 
+ WARNING: 
+ 	 	 BASE FILE PATH FOR THE APPLIFIRE APP  
+ 	 	  SHOULD BE USED ONLY IF THE ABSOLUTE PATH 
+ 	 	  CANNOT BE AUTOMATICALLY DERIVED -->
+	 	 <pathConfig os="linux">
+	 	 	 <baseFilePath><![CDATA[/home/applifire]]></baseFilePath>
+	 	 	 <webAppPath><![CDATA[/Softwares/tomcat/webapps/apptest]]></webAppPath >
+
+	 	 </pathConfig>
+
+	 	 <authenticationConfig>
+	 	 <!-- Plugin type 0 = internal authentication like database or active directory will be used.
+ 	 	  Plugin type 1 = external authentication mechanism will be used. -->
+	 	 	 <authPlugin type="0">	 	 	 	<!-- authentication type 1 = database authentication . authentication type 2 = active directory authentication. REQUIRED FOR Plugin TYPE = 0 ONLY -->
+	 	 	 	<authType>1</authType>
+	 	 	 	<!--User defined class to be loaded for authentication . REQUIRED FOR Plugin TYPE = 1 ONLY -->
+	 	 	 	<authClassName>com.x.y.MyCustomAuthentication</authClassName>
+	 	 	 	<authProperties>
+	 	 	 	</authProperties>
+	 	 	 </authPlugin>
+	 	 	 <recaptcha>false</recaptcha>
+	 	 </authenticationConfig>
+	 	 <!-- DATABASE PROPERTIES -->
+	  <databaseConfig>
+	 	 <!-- Connection Properties -->
+	 	 <connectionConfig>
+	 	 	 <driverName>com.mysql.jdbc.Driver</driverName>
+	 	 	 <protocol>    <![CDATA[jdbc:mysql://]]></protocol>
+	 	 	 <host>localhost-MYSQL</host>
+	 	 	 <port>3306</port>
+	 	 	 <database>apptest</database>
+	 	 	 <optionalParams>
+	 	 	 <![CDATA[?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull]]>
+	 	 	 </optionalParams>
+	 	 	 <userName>algo</userName>
+	 	 	 <password>algo</password>
+	 	 </connectionConfig>
+
+
+	 	 <!-- JDBC Properties -->
+	 	 <connectionPooling>
+	 	 	 <initialSize>1</initialSize>
+	 	 	 <maxActive>1</maxActive>
+	 	 	 <maxIdle>1</maxIdle>
+	 	 	 <minIdle>1</minIdle>
+	 	 	 <testOnBorrow>true</testOnBorrow>
+	 	 	 <testOnReturn>true</testOnReturn>
+	 	 	 <testWhileIdle>true</testWhileIdle>
+	 	 	 <validationQuery>SELECT 1;</validationQuery>
+	 	 	 <timeBetweenEvictionRunsMillis>1</timeBetweenEvictionRunsMillis>
+	 	 	 <numTestPerEvictionRun>1</numTestPerEvictionRun>
+	 	 </connectionPooling>
+	</databaseConfig>
+
+<!-- CUSTOMER FILE PROPERTIES USER OR CUSTOMER SPECIFIC DIRECTORY INFO OR FILE INFO ARE NOT ALLOWED 
+ 	  1. Customer Properties will Start with Customer UUID inside the c folder 
+ 2. Inside the Customer UUID Folder will be the folder u for users which contains users UUID 
+ 3. All Code and BluePrint related folders / files will be stored under workspace folder.
+For Example		
+   Customers = /AbsolutePath/c/c23d95cc-3cd4-4484-b262-3828446f79ec 
+			Users 	  = /../c/../u/e25e384e-ec88-40d8-8714-0d0b859ec086/ 
+				  = /../c../u/../tempData/ 
+				  = /../c../u/../sessionData/	
+			  = /../c../u/../drivePrivate/ 
+				             = /../c../u/../drivePrivate/../reports 
+	-->
+	 	 <searchEngineConfig>
+	 	 	 <docResultFields></docResultFields>
+	 	 	 <language></language>
+	 	 	 <searchAppURL></searchAppURL>
+	 	 	 <basePath></basePath>
+	 	 </searchEngineConfig>
+<!--Cloud Drive Properties : Search Engine will use the Public Drive and Private Drive 
+		 Exclusively for the logged in user. 
+		In the RAD		Customers = /AbsolutePath/c/c23d95cc-3cd4-4484-b262-3828446f79ec 
+			Users 	  = /../c/../u/e25e384e-ec88-40d8-8714-0d0b859ec086/ 
+			Public	  = /../c/../drive/ 
+			Private	  = /../c../u/../drivePrivate/	-->
+	 	 <!-- Email Configuration -->
+	 	 <mailConfig>
+	 	 	 <userName>admin@algorhythm.co.in</userName>
+	 	 	 <password>algo#1234</password>
+	 	 	 <fromUser>null</fromUser>
+	 	 	 <smtpAuth>true</smtpAuth>
+	 	 	 <smtpHost>smtp.gmail.com</smtpHost>
+	 	 	 <smtpPort>25</smtpPort>
+	 	 	 <smtpsPort>465</smtpsPort>
+	 	 	 <smtpStarttlsEnable>true</smtpStarttlsEnable>
+	 	 	 <smtpSslEnable>false</smtpSslEnable>
+	 	 </mailConfig>
+	 	 <!-- Scheduler url -->
+	 	 <schedulerConfig>
+	 	 	 <schedulerurl>http://localhost:8080/apptestScheduler</schedulerurl>
+	 	 	 <schedulerRefreshTime>300000</schedulerRefreshTime>
+	 	 </schedulerConfig>
+	 	 <!-- Integration Connectors  -->
+</AppConfig>

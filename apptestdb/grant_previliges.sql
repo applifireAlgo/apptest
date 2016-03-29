@@ -1,0 +1,2 @@
+
+GRANT ALL PRIVILEGES  ON apptest.* TO 'algo'@'%' IDENTIFIED BY 'algo' WITH GRANT OPTION
